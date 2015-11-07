@@ -79,6 +79,7 @@ abstract class System {
   int setBlocking(int fd, bool blocking);
   int setCloseOnExec(int fd, bool closeOnExec);
   SystemInformation info();
+  int system(String command);
   int get AF_INET;
   int get AF_INET6;
   int get SOCK_STREAM;

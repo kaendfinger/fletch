@@ -98,6 +98,9 @@ abstract class PosixSystem implements System {
   static final ForeignFunction _uname =
       ForeignLibrary.main.lookup("uname");
 
+  static final ForeignFunction _system =
+      ForeignLibrary.main.lookup("system");
+
   int get AF_INET => 2;
   int get AF_INET6;
 
@@ -425,5 +428,12 @@ abstract class PosixSystem implements System {
     } finally {
       utsname.free();
     }
+  }
+
+  int system(String command) {
+    ForeignMemory cCommand = new ForeignMemory.fromStringAsUTF8(command);
+    int result = _system.icall$1Retry(cCommand);
+    cCommand.free();
+    return result;
   }
 }
